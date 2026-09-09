@@ -1,5 +1,5 @@
 // Prototipo cadastro itens do Roblox
-// Alunos: João e Arthur
+// Alunos: João, Arthur G. e Victor S.
 
 // ===================================================================
 // ETAPA 1 - FICHA DOS ITENS (VARIAVEIS, TIPOS E TEMPLATE STINGS)
