@@ -92,7 +92,7 @@ if (itemEscolhido.preco < 100) {
 } else if (itemEscolhido.preco < 500) {
       itemEscolhida.raridade = "Raro";                                        
 } else {
-    
+
 // ===============================================================================
 // ETAPA 3 - CADASTRO EM LOTE (LAÇO FOR)
 // ===============================================================================
