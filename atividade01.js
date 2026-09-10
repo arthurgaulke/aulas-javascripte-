@@ -44,7 +44,7 @@ const catalogo = [
         nome: "Skin Hárpia",
         preco: 600,
         raridade: "Raro",
-        estoque: 10 
+        estoque: 10
     }
 ];
 
@@ -61,11 +61,20 @@ async function programa() {
         console.log(`${index + 1} - ${item.nome}`);
     });
 
-    const escolha = Number(
-        await perguntar("Digite o número do item: ")
-    );
+    let escolha;
+    let itemEscolhido;
 
-    const itemEscolhido = catalogo[escolha - 1];
+    do {
+        escolha = Number(
+            await perguntar("Digite o número do item: ")
+        );
+
+        itemEscolhido = catalogo[escolha - 1];
+
+        if (!itemEscolhido) {
+            console.log("Número inválido! Tente novamente.");
+        }
+    } while (!itemEscolhido);
 
 
     // ============================================================
@@ -142,42 +151,41 @@ Estoque: ${itemEscolhido.estoque} unidades
         }
     }
 
-// ============================================================
-// ETAPA 4 — CONTROLE DE ESTOQUE 
-// ============================================================
+    // ============================================================
+    // ETAPA 4 — CONTROLE DE ESTOQUE
+    // ============================================================
 
-console.log("\n=== CONTROLE DE ESTOQUE ===");
+    console.log("\n=== CONTROLE DE ESTOQUE ===");
 
-while (itemEscolhido.estoque > 0) {
-
-    console.log(
-        `Estoque atual de ${itemEscolhido.nome}: ${itemEscolhido.estoque}`
-    );
-
-    const venda = Number(
-        await perguntar(
-            "Quantas unidades deseja retirar? "
-        )
-    );
-
-    if (venda > 0 && venda <= itemEscolhido.estoque) {
-
-        itemEscolhido.estoque -= venda;
+    while (itemEscolhido.estoque > 0) {
 
         console.log(
-            `Venda realizada! Estoque restante: ${itemEscolhido.estoque}`
+            `Estoque atual de ${itemEscolhido.nome}: ${itemEscolhido.estoque}`
         );
 
-    } else {
-
-        console.log(
-            "Quantidade inválida ou estoque insuficiente!"
+        const venda = Number(
+            await perguntar(
+                "Quantas unidades deseja retirar? "
+            )
         );
+
+        if (venda > 0 && venda <= itemEscolhido.estoque) {
+
+            itemEscolhido.estoque -= venda;
+
+            console.log(
+                `Venda realizada! Estoque restante: ${itemEscolhido.estoque}`
+            );
+
+        } else {
+
+            console.log(
+                "Quantidade inválida ou estoque insuficiente!"
+            );
+        }
     }
-}
 
-console.log(`${itemEscolhido.nome} está esgotado!`);
-
+    console.log(`${itemEscolhido.nome} está esgotado!`);
 
 
     // ============================================================
