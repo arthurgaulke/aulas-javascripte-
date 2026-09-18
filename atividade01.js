@@ -72,7 +72,7 @@ async function programa() {
         itemEscolhido = catalogo[escolha - 1];
 
         if (!itemEscolhido) {
-            console.log("Número inválido! Tente novamente.");
+            console.log("informação inválida! Tente novamente.");
         }
     } while (!itemEscolhido);
 
