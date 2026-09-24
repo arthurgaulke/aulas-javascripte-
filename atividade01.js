@@ -1,137 +1,209 @@
-// Prototipo cadastro itens do Roblox
-// Alunos: João e Arthur
 const readline = require("readline");
 
-const r1 = readline.createInterface({
-    input: process.stadin
+const rl = readline.createInterface({
+    input: process.stdin,
     output: process.stdout
 });
 
-funtion perguntar (texto) {
+function perguntar(texto) {
     return new Promise(resolve => {
-        r1.question(texto, resposta 
-=> {
+        rl.question(texto, resposta => {
             resolve(resposta);
-        })
+        });
     });
 }
 
-//===========================================================================================
+
+// ============================================================
 // CATÁLOGO DE ITENS
-// ===========================================================================================
+// ============================================================
 
 const catalogo = [
     {
         nome: "Espada das Sombras",
         preco: 250,
-        raridade: "Raro"
+        raridade: "Raro",
         estoque: 12
     },
+
     {
-        nome: "Passe Bluester"
-        preco: 500
-        raridade: "Lendario"
+        nome: "Passe Bluster",
+        preco: 500,
+        raridade: "Lendário",
         estoque: 5
     },
+
     {
-        nome: "Skin Harpia"
-        preco: 600,
-        raridade: "Raro"
-        estoque: 10
+        nome: "Pet Lanterna",
+        preco: 100,
+        raridade: "Comum",
+        estoque: 25
     },
+
     {
-        nome: "pet lanterna"
-        preco: 100
-        raridade: "Comun"
-        estoque: 20
-
-
+        nome: "Skin Hárpia",
+        preco: 600,
+        raridade: "Raro",
+        estoque: 10
     }
 ];
 
-asyn function programa() {
 
-// ========================================================================================
-// ESCOLHA DO ITEM
-// ========================================================================================
+async function programa() {
 
-    console.log("=== ESCOLHA UM ITEM===");
-    catalogo.forEach((item, index) =>
-{
-        console.log(`${index + 1} - $ {item.nome}`);
-});
+    // ============================================================
+    // ESCOLHA DO ITEM
+    // ============================================================
 
-        const itemEscolhido
-    catalogo[escolha - 1];
+    console.log("=== ESCOLHA UM ITEM ===");
 
-}
-// ===================================================================
-// ETAPA 1 - FICHA DOS ITENS (VARIAVEIS, TIPOS E TEMPLATE STINGS)
-//====================================================================
+    catalogo.forEach((item, index) => {
+        console.log(`${index + 1} - ${item.nome}`);
+    });
 
-        console.log(`=== FICHA DO ITEM ===
-Nome: ${itemEscolhida.nome};
-preço: R$ ${itemEscolhida.preco} 
-Raridade: ${itemEscolhida.raridade}
-Estoques: ${itemEscolhida.estoque}
-unidades
+    let escolha;
+    let itemEscolhido;
+
+    do {
+        escolha = Number(
+            await perguntar("Digite o número do item: ")
+        );
+
+        itemEscolhido = catalogo[escolha - 1];
+
+        if (!itemEscolhido) {
+            console.log("informação inválida! Tente novamente.");
+        }
+    } while (!itemEscolhido);
+
+
+ // ============================================================
+ // ETAPA 1 — FICHA DO ITEM
+ // ============================================================
+
+    console.log(`
+=== FICHA DO ITEM ===
+Nome: ${itemEscolhido.nome}
+Preço: R$ ${itemEscolhido.preco}
+Raridade: ${itemEscolhido.raridade}
+Estoque: ${itemEscolhido.estoque} unidades
 `);
 
-// =====================================================================
-// ETAPA 2 - REGRAS DE NEGÓCIO (OPERADORES E CONDICIONAIS)
-// =====================================================================
 
-console.log("=== REGRAS DE NEGÓCIO ===")
+// ============================================================
+// ETAPA 2 — REGRAS DE NEGÓCIO
+// ============================================================
 
-if (itemEscolhida.preco >= 0) {
-    console.log("Preço inválidade.");
-}
+    console.log("=== REGRAS DE NEGÓCIO ===");
 
-if (itemEscolhido.preco < 100) {
-    itemEscolhido.raridade = "Comun";
-} else if (itemEscolhido.preco < 500) {
-      itemEscolhida.raridade = "Raro";                                        
-} else {
-
-// ===============================================================================
-// ETAPA 3 - CADASTRO EM LOTE (LAÇO FOR)
-// ===============================================================================
-
-console.log("=== CADASTRO EM LOTE ===");
-for (let i = 0; i < 5; i++) {
-    console.log(`Item ${i + 1} cadastro com sucesso`)
-    
-    if (i % 2 === 0) {
-        console.log("Item em promoção dessa semana!");
+    if (itemEscolhido.preco >= 0) {
+        console.log("Preço válido.");
+    } else {
+        console.log("Preço inválido.");
     }
+
+
+    // Classificação automática
+    if (itemEscolhido.preco < 100) {
+        itemEscolhido.raridade = "Comum";
+
+    } else if (itemEscolhido.preco < 500) {
+        itemEscolhido.raridade = "Raro";
+
+    } else {
+        itemEscolhido.raridade = "Lendário";
+    }
+
+    console.log(
+        `Raridade: ${itemEscolhido.raridade}`
+    );
+
+
+    const emDestaque =
+        itemEscolhido.preco > 500 ? true : false;
+
+    console.log(`Item em destaque? ${emDestaque}`);
+
+
+    const disponivel =
+        itemEscolhido.estoque > 0 &&
+        itemEscolhido.preco > 0;
+
+    console.log(
+        `Disponível para compra? ${disponivel}`
+    );
+
+
+// ============================================================
+ // ETAPA 3 — CADASTRO EM LOTE
+ // ============================================================
+
+    console.log("\n=== CADASTRO EM LOTE ===");
+
+    for (let i = 0; i < 5; i++) {
+
+        console.log(
+            `Item ${i + 1}: ${itemEscolhido.nome} cadastrado!`
+        );
+
+        if (i % 2 === 0) {
+            console.log("Item em promoção da semana!");
+        }
+    }
+
+ // ============================================================
+ // ETAPA 4 — CONTROLE DE ESTOQUE
+ // ============================================================
+
+    console.log("\n=== CONTROLE DE ESTOQUE ===");
+
+    while (itemEscolhido.estoque > 0) {
+
+        console.log(
+            `Estoque atual de ${itemEscolhido.nome}: ${itemEscolhido.estoque}`
+        );
+
+        const venda = Number(
+            await perguntar(
+                "Quantas unidades deseja retirar? "
+            )
+        );
+
+        if (venda > 0 && venda <= itemEscolhido.estoque) {
+
+            itemEscolhido.estoque -= venda;
+
+            console.log(
+                `Venda realizada! Estoque restante: ${itemEscolhido.estoque}`
+            );
+
+        } else {
+
+            console.log(
+                "Quantidade inválida ou estoque insuficiente!"
+            );
+        }
+    }
+
+    console.log(`${itemEscolhido.nome} está esgotado!`);
+
+
+// ============================================================
+// ETAPA 5 — CATÁLOGO ATUALIZADO
+// ============================================================
+
+    console.log("\n=== CATÁLOGO DE ITENS ===");
+
+    for (const item of catalogo) {
+
+        console.log(
+            `🛒 ${item.nome} | R$ ${item.preco} | ` +
+            `${item.raridade} | Estoque: ${item.estoque}`
+        );
+    }
+
+
+    rl.close();
 }
-console.log("");
 
-// =================================================================================
-// ETAPA 4 - CONTROLE DE ESTOQUE (LAÇO WHILE)
-// =================================================================================
-
-console.log("=== CONTROLE DE ESTOQUE ===");
-while (quantidadeEstoque > 0) {
-    quantidadeEstoque-= 2;
-    console.log(`Estoque resstante: ${quantidadeEstoque}`);
-}
-console.log("Item esgotado!");
-console.log("");
-
-// =====================================================================================
-// ETAPA 5 - CATÁLOGO DE ITENS (LAÇOS FOR...OF)
-// =====================================================================================
-
-console.log("=== CATÁLOGO DE ITENS (VITRINE) ===")
-const catalogo = [
-    "Capa do Lapislazule",
-    "Passe Bluestar",
-    "Pet lanterna", 
-    "Skin Harpia"
-
-];
-
-for (const item of catalogo) {
-    console.log(` ${item} `);
-}
+programa();
